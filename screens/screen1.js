@@ -11,12 +11,31 @@ import {
 } from 'react-native'
 import { HeaderButtons, Item} from 'react-navigation-header-buttons'
 import HeaderButton from '../components/UI/HeaderButton'
-
+import { useSelector } from 'react-redux'
+import ItemList from '../components/ItemList'
 const screen1 = props => {
+    const products = useSelector(state => state.product.availableProducts)
     return (
-        <View style = {styles.screen}>
-            <Text>test screen1</Text>
-        </View>
+        // <View style = {styles.screen}>
+        //     <Text>test screen1</Text>
+        // </View>
+        <FlatList
+            style = {styles.container}
+            data = {products}
+            keyExtractor = {item => item.id}
+            renderItem = {itemData => 
+            <ItemList 
+                image={itemData.item.imageUrl}
+                title={itemData.item.title}
+                address={itemData.item.address}
+                onViewDetail={() => {
+                    props.navigation.navigate('ProductDetails', {
+                      productId: itemData.item.id,
+                      productTitle: itemData.item.title
+                    });
+                  }}
+            /> }
+        />
     )
 }
 
@@ -33,7 +52,8 @@ screen1.navigationOptions = navData => {
                     navData.navigation.toggleDrawer()
                 }} />
         </HeaderButtons>,
-        // headerRight : (
+         headerRight : (
+             <View></View>
         // <HeaderButtons HeaderButtonComponent = {HeaderButton}>
         //     <Item 
         //         title = 'Cart' 
@@ -46,7 +66,7 @@ screen1.navigationOptions = navData => {
         //             })
         //         }} />
         // </HeaderButtons>
-        // )
+         )
     }
 
 }
@@ -56,6 +76,9 @@ const styles = StyleSheet.create({
         flex : 1,
         justifyContent : 'center',
         alignItems : 'center'
+    },
+    container : {
+        margin : 5
     }
 })
 

@@ -33,20 +33,21 @@ Offre.navigationOptions = navData => {
                     navData.navigation.toggleDrawer()
                 }} />
         </HeaderButtons>,
-        // headerRight : (
-        // <HeaderButtons HeaderButtonComponent = {HeaderButton}>
-        //     <Item 
-        //         title = 'Cart' 
-        //         iconName = { Platform.OS === 'android' 
-        //         ? 'md-cart' 
-        //         : 'ios-cart'}
-        //         onPress = {() => {
-        //             navData.navigation.navigate({
-        //                 routeName : 'Cart'
-        //             })
-        //         }} />
-        // </HeaderButtons>
-        // )
+         headerRight : (
+            <View></View>
+       // <HeaderButtons HeaderButtonComponent = {HeaderButton}>
+       //     <Item 
+       //         title = 'Cart' 
+       //         iconName = { Platform.OS === 'android' 
+       //         ? 'md-cart' 
+       //         : 'ios-cart'}
+       //         onPress = {() => {
+       //             navData.navigation.navigate({
+       //                 routeName : 'Cart'
+       //             })
+       //         }} />
+       // </HeaderButtons>
+        )
     }
 
 }

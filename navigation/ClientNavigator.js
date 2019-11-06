@@ -6,6 +6,7 @@ import { Platform, SafeAreaView, Button, View, StyleSheet } from 'react-native'
 //import { useDispatch } from 'react-redux'
 
 import Screen1 from '../screens/screen1'
+import ProductDetail from '../screens/ProductDetail'
 import Prendre_un_rendez_vous_client from '../screens/Prendre_un_rendez_vous_client'
 import Mes_RDV_Client from '../screens/Mes_RDV_Client'
 import Offre from '../screens/Offre'
@@ -16,11 +17,13 @@ import Colors from '../constants/Colors'
 
 const defaultNavOptions = {
     headerStyle : {
-        backgroundColor : Platform.OS === 'android' ? 'black' : ''
+        backgroundColor : Platform.OS === 'android' ? 'black' : '',
     },
-    // headerTitleStyle : {
-    //     fontFamily : 'open-sans-bold'
-    // },
+    headerTitleStyle : {
+        //fontFamily : 'open-sans-bold'
+        textAlign:"center", 
+        flex : 1 
+    },
     // headerBackTitleStyle : {
     //     fontFamily : 'open-sans'
     // },
@@ -29,6 +32,7 @@ const defaultNavOptions = {
 
 const Screen = createStackNavigator({
     Screen : Screen1,
+    ProductDetails : ProductDetail
 }, {
         navigationOptions : {
             drawerIcon : drawerConfig => <Ionicons 
