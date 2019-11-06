@@ -45,12 +45,6 @@ const Mes_RDV_Client = props => {
     dispatch(prestActions.addDateRDV(moment(date).format('MMMM Do YYYY HH:mm')))
     console.log(prestationState)
   };
-
-
-
-
-
-
     const prestItem = useSelector(state => {
         const tarnPrestItem = []
         for (const key in state.prestation.items) {
@@ -102,8 +96,6 @@ const Mes_RDV_Client = props => {
                 </View>
             </View>
             <DateTimePicker
-
-
                 isVisible={isVisible}
                 onConfirm={handleDatePicked}
                 onCancel={hideDateTimePicker}
@@ -111,11 +103,7 @@ const Mes_RDV_Client = props => {
                 is24Hour={false}
                 color = 'black'
                 datePickerModeAndroid={'calendar'}
-
             />
-
-
-
 
             <View style = {{ width : '100%', justifyContent : 'center', alignItems : 'center'}}>
             <Text>Votre Prestations </Text>
@@ -139,10 +127,6 @@ const Mes_RDV_Client = props => {
                     />
             <Text>{chosenDate}</Text>
             <Button title = 'show State' onPress = {() => {console.log(prestationState)}} />
-
-
-
-
         </View>
         </ScrollView>
     )
