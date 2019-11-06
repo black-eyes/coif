@@ -105,7 +105,7 @@ const Mes_RDV_Client = props => {
                 datePickerModeAndroid={'calendar'}
             />
 
-            <View style = {{ width : '100%', justifyContent : 'center', alignItems : 'center'}}>
+            <View style = {{width : '100%', justifyContent : 'center', alignItems : 'center'}}>
             <Text>Votre Prestations </Text>
             <FlatList
                     data = {prestItem}
