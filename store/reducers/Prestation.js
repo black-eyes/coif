@@ -1,11 +1,14 @@
-import { ADD_TO_ITEMS, REMOVE_ITEM, ADD_OPERATOR, ADD_DATE_RDV } from '../actions/Prestation'
+import { ADD_TO_ITEMS, REMOVE_ITEM, ADD_OPERATOR, ADD_DATE_RDV, ADD_TIME_RDV } from '../actions/Prestation'
 import PrestItem from '../../models/prestation'
 import OperatorItem from '../../models/Operator'
 
 const initialState = {
     items : {},
     operator : {},
-    dateRDV : ''
+    dateRDV : {
+        date : '',
+        time : ''
+    }
     //userProducts: PRODUCTS.filter(prod => prod.ownerId === 'u1')
 };
 
@@ -63,7 +66,23 @@ export default (state = initialState, action) => {
                 ...state,
                 items : {...state.items},
                 operator : {...state.operator},
-                dateRDV : dateRdv
+                dateRDV : {
+                    date : dateRdv,
+                    time : ''
+                }
+            }
+        case ADD_TIME_RDV : 
+            const timeRdv = action.timeRdv
+            const dateR = state.dateRDV.date
+            console.log(timeRdv+ ' hhhhhhhh')
+            return {
+                ...state,
+                items : {...state.items},
+                operator : {...state.operator},
+                dateRDV : {
+                    date : dateR,
+                    time : timeRdv
+                }
             }
     }
     return state;

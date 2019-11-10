@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState, useEffect, useCallback} from 'react'
 import { 
     View, 
     Text, 
@@ -9,25 +9,32 @@ import {
     StyleSheet,
     Platform,
     //Modal,
+    TouchableOpacity,
     TouchableHighlight,
     Alert,
     ActivityIndicator
 } from 'react-native'
+import Modal from "react-native-modal"
 import { HeaderButtons, Item} from 'react-navigation-header-buttons'
 import HeaderButton from '../components/UI/HeaderButton'
 import OperatorItem from '../components/ItemClient/OperatorItem'
 import { useSelector, useDispatch } from 'react-redux'
 import Modals from '../components/UI/Modal_RDV'
 import ModalsOpt from '../components/UI/Modal_Ope'
+import ModalsTime from '../components/UI/Modal_time'
 import PrestItem from '../components/ItemClient/prestItems'
 import * as prestActions from '../store/actions/Prestation'
 import DateTimePicker from "react-native-modal-datetime-picker";
 import moment from 'moment'
+import DATETAIME from '../data/datatime'
 
 const Mes_RDV_Client = props => {
     const products = useSelector(state => state.product.availableProducts)
     const [isVisible, setIsVisible] = useState(false)
-    const [chosenDate, setChosenDate] = useState('')
+    const [isVisibleTime, setIsVisibleTime] = useState(false)
+    const [chosenDate, setChosenDate] = useState()
+    const [selected, setSelected] = useState(new Map());
+    const [isData, setIsData] = useState([])
 
   const showDateTimePicker = () => {
     setIsVisible(true)
@@ -37,14 +44,23 @@ const Mes_RDV_Client = props => {
     setIsVisible(false)
   };
 
+  let datep = ""
+
   const handleDatePicked = date => {
     console.log("A date has been picked: ", date);
     hideDateTimePicker();
-    setChosenDate(moment(date).format('MMMM Do YYYY HH:mm'))
-    console.log(chosenDate+' test date')
-    dispatch(prestActions.addDateRDV(moment(date).format('MMMM Do YYYY HH:mm')))
+    setIsVisibleTime(true)
+    datep = moment(date).format('MMMM Do YYYY')
+    setChosenDate(date)
+    console.log(datep+' test date')
+    dispatch(prestActions.addDateRDV(moment(date).format('MMMM Do YYYY')))
     console.log(prestationState)
   };
+
+  const handlerDateTime = (time) => {
+    console.log(datep+time +' gogo')
+    dispatch(prestActions.addTimeRDV(time))
+  }
     const prestItem = useSelector(state => {
         const tarnPrestItem = []
         for (const key in state.prestation.items) {
@@ -70,6 +86,36 @@ const Mes_RDV_Client = props => {
     useEffect(() => {
         console.log(prestationState+' useEffect')
     }, [dispatch])
+
+    const onSelect = useCallback(
+        dataItem => {
+        const newSelected = new Map(selected);
+        newSelected.set(dataItem.id, !selected.get(dataItem.id));
+        console.log('selected'+ selected.size)
+        console.log('newSelected.id' + newSelected.id)
+        setSelected(newSelected);
+        },
+        [selected],
+    );
+
+    const Item = ({ id, time, selected, onSelect, dataItem }) => {
+        return (
+          <TouchableOpacity
+            onPress={() => {
+                onSelect(dataItem)
+                handlerDateTime(time)
+            }}
+            style={[
+                styles.gridItem,
+              { backgroundColor: selected ? '#ccc' : '#000' },
+            ]}
+          >
+            <View>
+                <Text style = {styles.textTime}>{time}</Text>
+            </View>
+          </TouchableOpacity>
+        );
+      }
 
     return (
         <ScrollView>
@@ -99,11 +145,33 @@ const Mes_RDV_Client = props => {
                 isVisible={isVisible}
                 onConfirm={handleDatePicked}
                 onCancel={hideDateTimePicker}
-                mode={'datetime'}
+                mode={'date'}
                 is24Hour={false}
                 color = 'black'
                 datePickerModeAndroid={'calendar'}
             />
+
+            <Modal isVisible={isVisibleTime} >
+                <View style={styles.container}>
+                    <FlatList
+                        style = {styles.containerFlat}
+                        data = {DATETAIME}
+                        keyExtractor = {item => item.id}
+                        onSelect={onSelect}
+                        renderItem = {itemData => <Item
+                            id={itemData.item.id}
+                            time={itemData.item.time}
+                            dataItem = {itemData.item}
+                            selected={!!selected.get(itemData.item.id)}
+                            onSelect={onSelect}
+                          />
+                        }
+                        numColumns = {2}
+                        extraData={selected}
+                    />
+                    <Button title="Hide modal" onPress={() => setIsVisibleTime(false)} />
+                </View>
+            </Modal>         
 
             <View style = {{ width : '100%', justifyContent : 'center', alignItems : 'center'}}>
             <Text>Votre Prestations </Text>
@@ -125,7 +193,7 @@ const Mes_RDV_Client = props => {
                         image = {operatorItem.imageUrl}
                         onSelect = {() => {console.log(prestationState)}}
                     />
-            <Text>{chosenDate}</Text>
+            <Text>{prestationState.dateRDV.date + ' ' + prestationState.dateRDV.time}</Text>
             <Button title = 'show State' onPress = {() => {console.log(prestationState)}} />
         </View>
         </ScrollView>
@@ -200,6 +268,25 @@ const styles = StyleSheet.create({
     text : {
         color : 'black',
         paddingVertical : 5
+    },
+    containerFlat : {
+        backgroundColor : 'white',
+        maxHeight : '80%',
+        minHeight : '60%'
+    },
+    gridItem : {
+        flex : 1,
+        alignItems : "center",
+        justifyContent : "center",
+        margin : 5,
+        height : 50,
+        backgroundColor : 'black',
+        borderRadius : 8
+    },
+    textTime : {
+        color : 'white',
+        fontWeight : 'bold',
+        fontSize : 16
     }
 })
 

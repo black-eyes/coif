@@ -2,6 +2,7 @@ export const ADD_TO_ITEMS = 'ADD_TO_ITEMS'
 export const REMOVE_ITEM = 'REMOVE_ITEM'
 export const ADD_OPERATOR = 'ADD_OPERATOR'
 export const ADD_DATE_RDV = 'ADD_DATE_RDV'
+export const ADD_TIME_RDV = 'ADD_TIME_RDV'
 
 export const addToItems = prestation => {
     return { type : ADD_TO_ITEMS, prestation : prestation}
@@ -17,4 +18,8 @@ export const addOperator = operator => {
 
 export const addDateRDV = dateRdv => {
     return { type : ADD_DATE_RDV, dateRdv : dateRdv}
+}
+
+export const addTimeRDV = timeRdv => {
+    return { type : ADD_TIME_RDV, timeRdv : timeRdv}
 }
