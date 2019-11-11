@@ -11,11 +11,51 @@ import {
 } from 'react-native'
 import { HeaderButtons, Item} from 'react-navigation-header-buttons'
 import HeaderButton from '../components/UI/HeaderButton'
+import ItemOffer from '../components/itemOffer'
 
 const Offre = props => {
+
+    const items = [{
+        id: '92iijs7yta',
+        title: 'Offer 1',
+        description : "What the content is? Why would that matter? It's a limited edition!",
+        imageUrl: 'https://images.pexels.com/photos/160834/coffee-cup-and-saucer-black-coffee-loose-coffee-beans-160834.jpeg?cs=srgb&dl=bean-beans-black-coffee-160834.jpg&fm=jpg',
+        date : 'Reste DD:HH:MM:SS'
+      }, {
+        id: 'a0s0a8ssbsd',
+        title: 'Offre 2',
+        description : "What the content is? Why would that matter? It's a limited edition!",
+        imageUrl: 'https://images.pexels.com/photos/160834/coffee-cup-and-saucer-black-coffee-loose-coffee-beans-160834.jpeg?cs=srgb&dl=bean-beans-black-coffee-160834.jpg&fm=jpg',
+        date : 'Reste DD:HH:MM:SS'
+      }, {
+        id: '16hbajsabsd',
+        title: 'Offer 3',
+        description : "What the content is? Why would that matter? It's a limited edition!",
+        imageUrl: 'https://images.pexels.com/photos/160834/coffee-cup-and-saucer-black-coffee-loose-coffee-beans-160834.jpeg?cs=srgb&dl=bean-beans-black-coffee-160834.jpg&fm=jpg',
+        date : 'Reste DD:HH:MM:SS'
+      }];
+
     return (
         <View style = {styles.screen}>
-            <Text>Offre</Text>
+            <FlatList
+            style = {styles.flatlist}
+            data = {items}
+            keyExtractor = {item => item.id}
+            renderItem = {itemData => <ItemOffer 
+            title = {itemData.item.title}
+            image = {itemData.item.imageUrl}
+            discription = {itemData.item.description}
+            onViewDetail = {() => {
+                props.navigation.navigate('OfferDetails', {
+                    offerId: itemData.item.id,
+                    offerTitle: itemData.item.title,
+                    offerImage : itemData.item.imageUrl,
+                    offerDescription : itemData.item.description
+
+                  });
+            }}
+            />}
+            />
         </View>
     )
 }
@@ -55,8 +95,14 @@ Offre.navigationOptions = navData => {
 const styles = StyleSheet.create({
     screen : {
         flex : 1,
-        justifyContent : 'center',
+        //justifyContent : 'center',
         alignItems : 'center'
+    },
+    flatlist : {
+        flex : 1,
+        marginHorizontal : 5,
+        //backgroundColor : 'red',
+        width : '100%'
     }
 })
 

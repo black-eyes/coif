@@ -11,6 +11,7 @@ import Prendre_un_rendez_vous_client from '../screens/Prendre_un_rendez_vous_cli
 import Mes_RDV_Client from '../screens/Mes_RDV_Client'
 import Offre from '../screens/Offre'
 import Mon_Compte_Client from '../screens/Mon_Compte_Client'
+import OfferDetail from '../screens/OfferDetails'
 
 import { Ionicons } from '@expo/vector-icons'
 import Colors from '../constants/Colors'
@@ -77,7 +78,8 @@ const MesRDVClient = createStackNavigator({
 })
 
 const Offre_Client = createStackNavigator({
-    Offre_Client : Offre
+    Offre_Client : Offre,
+    OfferDetails : OfferDetail
 }, {
     navigationOptions : {
         drawerIcon : drawerConfig => <Ionicons 
