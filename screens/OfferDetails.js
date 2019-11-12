@@ -18,6 +18,7 @@ const ProductDetail = props => {
     const offerTitle = props.navigation.getParam('offerTitle');
     const offerImage = props.navigation.getParam('offerImage');
     const offerDescription = props.navigation.getParam('offerDescription');
+    const offerDate = props.navigation.getParam('offerDate');
     // const selectedProduct = useSelector(state =>
     //     state.product.availableProducts.find(prod => prod.id === productId)
     // );

@@ -45,12 +45,14 @@ const Offre = props => {
             title = {itemData.item.title}
             image = {itemData.item.imageUrl}
             discription = {itemData.item.description}
+            date = {itemData.item.date}
             onViewDetail = {() => {
                 props.navigation.navigate('OfferDetails', {
                     offerId: itemData.item.id,
                     offerTitle: itemData.item.title,
                     offerImage : itemData.item.imageUrl,
-                    offerDescription : itemData.item.description
+                    offerDescription : itemData.item.description,
+                    offerDate : itemData.item.date
 
                   });
             }}

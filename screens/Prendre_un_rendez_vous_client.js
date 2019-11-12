@@ -11,11 +11,40 @@ import {
 } from 'react-native'
 import { HeaderButtons, Item} from 'react-navigation-header-buttons'
 import HeaderButton from '../components/UI/HeaderButton'
+import ItemRDV from '../components/ItemRDV'
 
 const Prendre_un_rendez_vous_client = props => {
+
+    const items = [{
+        id: '92iijs7yta',
+        prestation: 'shampoing Brushing',
+        name : 'Amal',
+        date : '11/12/2019'
+      }, {
+        id: 'a0s0a8ssbsd',
+        prestation: 'shampoing Brushing',
+        name : 'Amal',
+        date : '11/15/2019'
+      }, {
+        id: '16hbajsabsd',
+        prestation: 'shampoing Brushing',
+        name : 'Amal',
+        date : '11/10/2019'
+      }];
+
     return (
         <View style = {styles.screen}>
-            <Text>Prendre un rendez vous</Text>
+            <FlatList 
+            style = {styles.flatlist}
+            data = {items}
+            keyExtractor = {item => item.id}
+            renderItem = {itemDate => <ItemRDV 
+            prestation = {itemDate.item.prestation}
+            name = {itemDate.item.name}
+            date = {itemDate.item.date}
+            />
+        }
+            />
         </View>
     )
 }
@@ -33,7 +62,8 @@ Prendre_un_rendez_vous_client.navigationOptions = navData => {
                     navData.navigation.toggleDrawer()
                 }} />
         </HeaderButtons>,
-        // headerRight : (
+         headerRight : (
+             <View></View>
         // <HeaderButtons HeaderButtonComponent = {HeaderButton}>
         //     <Item 
         //         title = 'Cart' 
@@ -46,7 +76,7 @@ Prendre_un_rendez_vous_client.navigationOptions = navData => {
         //             })
         //         }} />
         // </HeaderButtons>
-        // )
+         )
     }
 
 }
@@ -54,8 +84,11 @@ Prendre_un_rendez_vous_client.navigationOptions = navData => {
 const styles = StyleSheet.create({
     screen : {
         flex : 1,
-        justifyContent : 'center',
+        //justifyContent : 'center',
         alignItems : 'center'
+    },
+    flatlist : {
+        width : '100%'
     }
 })
 
